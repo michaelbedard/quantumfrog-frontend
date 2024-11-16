@@ -77,20 +77,20 @@ function App() {
 
 
   return (
-      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue' }}>
+      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'black' }}>
           <div>
-              <header
-                  style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional for readability
-                      zIndex: 10, // Ensures header is above the background
-                      textAlign: 'center', // Optional for centering text
-                  }}>
-                  Qubit 000 + 111
-              </header>
+              {/*<header*/}
+              {/*    style={{*/}
+              {/*        position: 'absolute',*/}
+              {/*        top: 0,*/}
+              {/*        left: 0,*/}
+              {/*        width: '100%',*/}
+              {/*        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional for readability*/}
+              {/*        zIndex: 10, // Ensures header is above the background*/}
+              {/*        textAlign: 'center', // Optional for centering text*/}
+              {/*    }}>*/}
+              {/*    Qubit 000 + 111*/}
+              {/*</header>*/}
 
               <StartScreenOverlay>
                   <div
@@ -125,8 +125,6 @@ function App() {
           </div>
       </div>
   );
-
-
 }
 
 export default App;
