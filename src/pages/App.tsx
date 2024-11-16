@@ -4,6 +4,8 @@ import './App.css';
 import backgroundworld from './../assets/backgroundworld.jpg';
 import CustomButton from "../components/CustomButton";
 import useMousePosition from '../_misc/hooks/useMousePosition';
+import StartScreen from "../components/StartScreenOverlay";
+import StartScreenOverlay from "../components/StartScreenOverlay";
 
 
 
@@ -75,7 +77,7 @@ function App() {
 
 
   return (
-      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue'  }}>
+      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue' }}>
           <div>
               <header
                   style={{
@@ -89,27 +91,27 @@ function App() {
                   }}>
                   Qubit 000 + 111
               </header>
-              <div>
 
-             </div>
-              Moving background
-              <div
-                  style={{
-                      position: "absolute",
-                      top: `${backgroundPosition.y}px`,
-                      left: `${backgroundPosition.x}px`,
-                      width: "200vw",
-                      height: "200vh",
-                      overflow: "hidden",
-                  }}
-              >
-                  <img src={backgroundworld} alt={"background"} style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                  }}/>
-              </div>
-               Fixed character
+              <StartScreenOverlay>
+                  <div
+                      style={{
+                          position: "absolute",
+                          top: `${backgroundPosition.y}px`,
+                          left: `${backgroundPosition.x}px`,
+                          width: "200vw",
+                          height: "200vh",
+                          overflow: "hidden",
+                      }}
+                  >
+                      <img src={backgroundworld} alt={"background"} style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                      }}/>
+                  </div>
+              </StartScreenOverlay>
+
+              Fixed character
               <div
                   style={{
                       position: "absolute",
@@ -118,17 +120,11 @@ function App() {
                       transform: "translate(-50%, -50%)",
                   }}
               >
-                  <img src={logo} className="App-logo" alt="logo" />
+                  <img src={logo} className="App-logo" alt="logo"/>
               </div>
           </div>
       </div>
   );
-
-
-  
-
-
-
 
 
 }
