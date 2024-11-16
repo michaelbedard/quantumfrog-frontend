@@ -30,7 +30,7 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
 
     return (
         <>
-            <img src={props.backgroundImage} alt={"door"} style={{
+            <img draggable="false" src={props.backgroundImage} alt={"door"} style={{
                 position: "absolute",
                 top: `${props.y * 100}%`,
                 left: `${props.x * 100}%`,

@@ -37,7 +37,7 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                  overflow: "hidden",
              }}
         >
-            <img src={backgroundworld} alt={"background"} style={{
+            <img draggable="false" src={backgroundworld} alt={"background"} style={{
                 position: "absolute",
                 width: "100%",
                 height: "100%",
@@ -46,7 +46,7 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
 
             <Door props={{
                 backgroundImage : door1,
-                x: 0.7,
+                x: 0.2,
                 y: 0.7,
                 isLocked: false,
                 PlayerCoordinates: props.Coordinate,
@@ -55,8 +55,8 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
 
             <Door props={{
                 backgroundImage : door2,
-                x: 0.7,
-                y: 0.7,
+                x: 0.8,
+                y: 0.2,
                 isLocked: false,
                 PlayerCoordinates: props.Coordinate,
                 backgroundSize
