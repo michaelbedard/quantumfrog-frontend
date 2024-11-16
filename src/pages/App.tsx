@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import logo from '../assets/logo.svg';
 import './App.css';
 import axios from "axios";
+import WebSocketButton from "../components/CustomButton";
 
 function App() {
   const [data, setData] = useState(null);
@@ -37,6 +38,7 @@ function App() {
             <h2>Fetched Data:</h2>
             {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : <p>Loading...</p>}
           </div>
+            <WebSocketButton/>
         </header>
       </div>
   );
