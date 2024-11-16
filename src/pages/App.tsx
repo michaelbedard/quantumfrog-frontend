@@ -19,7 +19,7 @@ function App() {
 
 
     const mouseCoord : {x: number, y:number} = {x: mousePosition.x - centerCoord.x,y: mousePosition.y - centerCoord.y}
-    const isMoving : boolean = true
+    const isMoving : boolean = true;
 
     console.log(mouseCoord.x, mouseCoord.y, isMoving);
 
