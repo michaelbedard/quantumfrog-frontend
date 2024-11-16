@@ -18,7 +18,7 @@ const WebSocketButton: React.FC = () => {
 
     const handleSendMessage = () => {
         if (inputValue.trim()) {
-            setInputValue(""); // Clear the input field after sending
+            setInputValue("");
         }
     };
 
