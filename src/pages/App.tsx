@@ -1,10 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import logo from '../assets/logo.svg';
 import './App.css';
 import backgroundworld from './../assets/backgroundworld.jpg';
-import CustomButton from "../components/CustomButton";
 import useMousePosition from '../_misc/hooks/useMousePosition';
-
+import useMouseDown from '../_misc/hooks/useMouseDown';
 
 
 
@@ -12,16 +11,17 @@ function App() {
 
     const [backgroundPosition, setBackgroundPosition] = useState< {x: number; y: number}>({ x: 0, y: 0 });
     const [mousePosition, setMousePosition] = useMousePosition();
-
+    const [mouseDown, setMouseDown] = useMouseDown();
+    const movement = 3;
     const screenwidth : number = window.innerWidth;
     const screenheight : number = window.innerHeight;
     const centerCoord : {x: number, y:number} = {x : screenwidth/2,  y: screenheight/2};
+    const mouseCoord : {x: number, y:number} = {x: mousePosition.x - centerCoord.x,y: centerCoord.y - mousePosition.y}
 
+    const lastMoveTime = useRef(0);
+    const animationFrameId = useRef<number | null>(null);
+    const isMouseDown = useRef(false); 
 
-    const mouseCoord : {x: number, y:number} = {x: mousePosition.x - centerCoord.x,y: mousePosition.y - centerCoord.y}
-    const isMoving : boolean = true;
-
-    console.log(mouseCoord.x, mouseCoord.y, isMoving);
 
     useEffect(() => {
         const updateMousePosition = (ev : MouseEvent) => {
@@ -37,47 +37,63 @@ function App() {
 
 
 
-        const movement = 10;
-        if(isMoving) {
-            const angle : number = Math.atan(mouseCoord.y/mouseCoord.x) - Math.PI/2
-            console.log(angle)
+    const handleMouseUp = (e: any) => {
+        setMouseDown(false);
+        isMouseDown.current = false;
+        cancelAnimationFrame(animationFrameId.current!)
+    }
+    
+    const handleMouseDown = (e: any) => {
+        setMouseDown(true);
+        isMouseDown.current = true;
+    }
+
+
+
+    useEffect(() => {
+    // Only move the background when mouseDown is true
+    if (mouseDown) {
+      const moveBackground = (timestamp: number) => {
+        const timeElapsed = timestamp - lastMoveTime.current;
+
+        if (timeElapsed > 16) { // Throttle to ~60 FPS (16ms per frame)
+          let angle: number = Math.acos(-mouseCoord.x / Math.sqrt(mouseCoord.x ** 2 + mouseCoord.y ** 2));
+          if (mouseCoord.y < 0) {
+            angle = -angle;
+          }
+
+          const xMove = Math.cos(angle) * movement;
+          const yMove = Math.sin(angle) * movement;
+
+          setBackgroundPosition((prev) => ({ x: prev.x + xMove, y: prev.y + yMove }));
+          lastMoveTime.current = timestamp;
         }
-      
 
-        const handleMouseDown = () => {
-            
+        if (mouseDown) {
+            animationFrameId.current = requestAnimationFrame(moveBackground);
         }
-    const handleKeyDown = (e : any) => {
-        const movement = 10;
-
-        console.log(e.key)
-
-        switch (e.key) {
-            case "ArrowUp":
-                setBackgroundPosition((prev) => ({ ...prev, y: prev.y + movement }));
-                break;
-            case "ArrowDown":
-                setBackgroundPosition((prev) => ({ ...prev, y: prev.y - movement }));
-                break;
-            case "ArrowLeft":
-                setBackgroundPosition((prev) => ({ ...prev, x: prev.x + movement }));
-                break;
-            case "ArrowRight":
-                setBackgroundPosition((prev) => ({ ...prev, x: prev.x - movement }));
-                break;
-            default:
-                break;
+      };
+      animationFrameId.current = requestAnimationFrame(moveBackground);
+    } else {
+        if (animationFrameId.current !== null) {
+          cancelAnimationFrame(animationFrameId.current);
+          animationFrameId.current = null;
         }
-    };
+      }
 
-
+      return () => {
+        if (animationFrameId.current !== null) {
+          cancelAnimationFrame(animationFrameId.current);
+        }
+      };
+  }, [mouseDown, mousePosition]); // Re-run when mouseDown or mouseCoord changes
 
 
 
   return (
-      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue'  }}>
-          <div>
-              <header
+      <div className="App"  draggable="false" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue'  }}>
+          <div draggable="false">
+              <header draggable="false"
                   style={{
                       position: 'absolute',
                       top: 0,
@@ -89,11 +105,8 @@ function App() {
                   }}>
                   Qubit 000 + 111
               </header>
-              <div>
 
-             </div>
-              Moving background
-              <div
+              <div draggable="false"
                   style={{
                       position: "absolute",
                       top: `${backgroundPosition.y}px`,
@@ -103,14 +116,14 @@ function App() {
                       overflow: "hidden",
                   }}
               >
-                  <img src={backgroundworld} alt={"background"} style={{
+                  <img draggable="false" src={backgroundworld} alt={"background"} style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
                   }}/>
               </div>
-               Fixed character
               <div
+              draggable="false"
                   style={{
                       position: "absolute",
                       top: "50%",
@@ -118,7 +131,7 @@ function App() {
                       transform: "translate(-50%, -50%)",
                   }}
               >
-                  <img src={logo} className="App-logo" alt="logo" />
+                  <img  draggable="false" src={logo} className="App-logo" alt="logo" />
               </div>
           </div>
       </div>
