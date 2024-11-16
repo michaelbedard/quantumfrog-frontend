@@ -27,6 +27,10 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
         return () => window.removeEventListener("resize", updateBackgroundSize);
     }, []);
 
+    useEffect(() => {
+        console.log(props.Coordinate)
+    }, [props.Coordinate.x]);
+
     return (
         <div
             ref={backgroundRef}

@@ -5,10 +5,11 @@ import { useEffect, useRef } from "react";
 interface UserControlsProps {
     backgroundPosition: { x: number; y: number };
     setBackgroundPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
+    Style?: React.CSSProperties;
     children: React.ReactNode;
 }
 
-const UserControls: React.FC<UserControlsProps> = ({ backgroundPosition, setBackgroundPosition, children }) => {
+const UserControls: React.FC<UserControlsProps> = ({ backgroundPosition, setBackgroundPosition, Style, children }) => {
 
     const [mousePosition, setMousePosition] = useMousePosition();
     const [mouseDown, setMouseDown] = useMouseDown();
@@ -87,7 +88,7 @@ const UserControls: React.FC<UserControlsProps> = ({ backgroundPosition, setBack
     }, [mouseDown, mousePosition]); // Re-run when mouseDown or mouseCoord changes
     
     return (
-        <div onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} tabIndex={0}>
+        <div onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} tabIndex={0} style={Style}>
             {children}
         </div>
     )

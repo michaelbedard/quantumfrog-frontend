@@ -19,6 +19,8 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
             Math.pow(props.PlayerCoordinates.y - props.y * props.backgroundSize.height, 2)
         );
 
+        console.log(distance);
+
         if (distance <= proximityThreshold) {
             if (props.isLocked) {
                 console.log("The door is locked. You can't pass!");

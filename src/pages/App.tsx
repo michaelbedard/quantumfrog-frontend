@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState} from 'react';
-import logo from '../assets/logo.svg';
+import frog from '../assets/frog.png';
 import './App.css';
 
-import backgroundworld from './../assets/backgroundworld.jpg';
 import UserControls from "../utils/UserControl";
 import Level1 from "../levels/Level1";
 import StartScreenOverlay from "../components/StartScreenOverlay";
@@ -15,9 +14,13 @@ export interface PlayerCoordinates {
 function App() {
     const [backgroundPosition, setBackgroundPosition] = useState<PlayerCoordinates>({x: 0, y: 0});
 
+    useEffect(() => {
+        console.log(backgroundPosition.x)
+    }, [backgroundPosition]);
+
     return (
-        <UserControls backgroundPosition={backgroundPosition} setBackgroundPosition={setBackgroundPosition}>
-            <div className="App" draggable="false" style={{outline: 'none', backgroundColor: 'lightblue'}}>
+        <UserControls backgroundPosition={backgroundPosition} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
+            <div className="App" draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
                 <div draggable="false">
                     <header draggable="false"
                             style={{
@@ -47,16 +50,18 @@ function App() {
 
                         </div>
                     </StartScreenOverlay>
+
                     <div
                         draggable="false"
                         style={{
                             position: "absolute",
-                            top: "50%",
+                            top: "80%",
                             left: "50%",
                             transform: "translate(-50%, -50%)",
+                            zIndex: 10,
                         }}
                     >
-                        <img draggable="false" src={logo} className="App-logo" alt="logo"/>
+                        <img draggable="false" src={frog} className="App-logo" alt="logo"/>
                     </div>
                 </div>
             </div>
