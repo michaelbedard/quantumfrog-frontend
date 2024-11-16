@@ -44,20 +44,6 @@ function StartScreenOverlay({ children }  : {children : any}) {
                     zIndex: 2,
                 }}
             >
-                {/*<div*/}
-                {/*    style={{*/}
-                {/*        position: "absolute",*/}
-                {/*        top: "50%",*/}
-                {/*        left: "50%",*/}
-                {/*        transform: "translate(-50%, -50%)",*/}
-                {/*        color: "white",*/}
-                {/*        zIndex: 3,*/}
-                {/*        textAlign: "center",*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*        {children}*/}
-                {/*</div>*/}
-
                 {children}
             </div>
 

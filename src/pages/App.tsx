@@ -1,14 +1,14 @@
 import React, { useEffect, useState} from 'react';
 import logo from '../assets/logo.svg';
 import './App.css';
-import backgroundworld from './../assets/backgroundworld.jpg';
-import CustomButton from "../components/CustomButton";
 import useMousePosition from '../_misc/hooks/useMousePosition';
-import StartScreen from "../components/StartScreenOverlay";
 import StartScreenOverlay from "../components/StartScreenOverlay";
+import Level1 from "../levels/Level1";
 
-
-
+export interface PlayerCoordinates {
+    x: number ;
+    y: number ;
+}
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
     const mouseCoord : {x: number, y:number} = {x: mousePosition.x - centerCoord.x,y: mousePosition.y - centerCoord.y}
     const isMoving : boolean = true
 
-    console.log(mouseCoord.x, mouseCoord.y, isMoving);
+    // console.log(mouseCoord.x, mouseCoord.y, isMoving);
 
     useEffect(() => {
         const updateMousePosition = (ev : MouseEvent) => {
@@ -42,7 +42,7 @@ function App() {
         const movement = 10;
         if(isMoving) {
             const angle : number = Math.atan(mouseCoord.y/mouseCoord.x) - Math.PI/2
-            console.log(angle)
+            // console.log(angle)
         }
       
 
@@ -103,11 +103,8 @@ function App() {
                           overflow: "hidden",
                       }}
                   >
-                      <img src={backgroundworld} alt={"background"} style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                      }}/>
+                      <Level1 props={{Coordinate: backgroundPosition}}/>
+
                   </div>
               </StartScreenOverlay>
 
