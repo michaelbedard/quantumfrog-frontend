@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StartScreen({ children }  : {children : any}) {
+function StartScreenOverlay({ children }  : {children : any}) {
     return (
         <div
             style={{
@@ -10,7 +10,7 @@ function StartScreen({ children }  : {children : any}) {
                 width: "100%",
                 height: "100%",
                 backgroundColor: "rgba(0, 0, 0, 0.8)", // Semi-transparent black overlay
-                clipPath: "circle(15% at 50% 50%)", // Transparent circle at the center
+                clipPath: "circle(15% at 50% 30%)", // Transparent circle at the center
                 zIndex: 2, // Ensures the overlay is above the background
             }}
         >
@@ -21,14 +21,16 @@ function StartScreen({ children }  : {children : any}) {
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     color: "white",
-                    zIndex: 3, // Ensure content is above everything
+                    zIndex: 3,
                     textAlign: "center",
                 }}
             >
-                {children}
+                <div style={{position: "relative"}}>
+                    {children}
+                </div>
             </div>
         </div>
     );
 }
 
-export default StartScreen;
+export default StartScreenOverlay;

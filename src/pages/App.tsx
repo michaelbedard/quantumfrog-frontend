@@ -4,7 +4,8 @@ import './App.css';
 import backgroundworld from './../assets/backgroundworld.jpg';
 import CustomButton from "../components/CustomButton";
 import useMousePosition from '../_misc/hooks/useMousePosition';
-import StartScreen from "../components/StartScreen";
+import StartScreen from "../components/StartScreenOverlay";
+import StartScreenOverlay from "../components/StartScreenOverlay";
 
 
 
@@ -76,7 +77,7 @@ function App() {
 
 
   return (
-      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue'  }}>
+      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue' }}>
           <div>
               <header
                   style={{
@@ -91,7 +92,7 @@ function App() {
                   Qubit 000 + 111
               </header>
 
-              <StartScreen>
+              <StartScreenOverlay>
                   <div
                       style={{
                           position: "absolute",
@@ -108,7 +109,7 @@ function App() {
                           objectFit: "cover",
                       }}/>
                   </div>
-              </StartScreen>
+              </StartScreenOverlay>
 
               Fixed character
               <div
