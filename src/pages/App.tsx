@@ -1,45 +1,83 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import logo from '../assets/logo.svg';
 import './App.css';
-import axios from "axios";
-import WebSocketButton from "../components/CustomButton";
+import backgroundworld from './../assets/backgroundworld.jpg';
+import CustomButton from "../components/CustomButton";
 
 function App() {
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    axios
-        .get('https://jsonplaceholder.typicode.com/posts/1')
-        .then((response) => {
-          console.log(response.data); // Log the response
-          setData(response.data); // Update state with data
-        })
-        .catch((error) => {
-          console.error('Error fetching data:', error);
-        });
-  }, []);
+    const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
+
+    const handleKeyDown = (e : any) => {
+        const movement = 10;
+
+        console.log(e.key)
+
+        switch (e.key) {
+            case "ArrowUp":
+                setBackgroundPosition((prev) => ({ ...prev, y: prev.y + movement }));
+                break;
+            case "ArrowDown":
+                setBackgroundPosition((prev) => ({ ...prev, y: prev.y - movement }));
+                break;
+            case "ArrowLeft":
+                setBackgroundPosition((prev) => ({ ...prev, x: prev.x + movement }));
+                break;
+            case "ArrowRight":
+                setBackgroundPosition((prev) => ({ ...prev, x: prev.x - movement }));
+                break;
+            default:
+                break;
+        }
+    };
 
   return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload!
-          </p>
-          <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue'  }}>
           <div>
-            <h2>Fetched Data:</h2>
-            {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : <p>Loading...</p>}
+              <header
+                  style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional for readability
+                      zIndex: 10, // Ensures header is above the background
+                      textAlign: 'center', // Optional for centering text
+                  }}>
+                  Qubit 000 + 111
+              </header>
+              <div>
+
+              </div>
+               Moving background
+              <div
+                  style={{
+                      position: "absolute",
+                      top: `${backgroundPosition.y}px`,
+                      left: `${backgroundPosition.x}px`,
+                      width: "200vw",
+                      height: "200vh",
+                      overflow: "hidden",
+                  }}
+              >
+                  <img src={backgroundworld} alt={"background"} style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                  }}/>
+              </div>
+               Fixed character
+              <div
+                  style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                  }}
+              >
+                  <img src={logo} className="App-logo" alt="logo" />
+              </div>
           </div>
-            <WebSocketButton/>
-        </header>
       </div>
   );
 }

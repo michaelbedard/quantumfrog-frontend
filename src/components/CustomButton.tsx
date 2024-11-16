@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from "react";
-import webSocketService from "../services/NetworkService";
+import axios from "axios";
 
 const WebSocketButton: React.FC = () => {
-    const [message, setMessage] = useState<string>("");
+    const [data, setData] = useState(null);
     const [inputValue, setInputValue] = useState<string>("");
 
     useEffect(() => {
-        // Connect the WebSocket when the component mounts
-        webSocketService.connect();
-
-        // Add a message handler to update the state with received messages
-        const handleMessage = (data: string) => {
-            setMessage(data);
-        };
-
-        webSocketService.addMessageHandler(handleMessage);
-
-        // Cleanup on component unmount
-        return () => {
-            webSocketService.removeMessageHandler(handleMessage);
-            webSocketService.disconnect();
-        };
+        axios
+            .get('https://jsonplaceholder.typicode.com/posts/1')
+            .then((response) => {
+                setData(response.data); // Update state with data
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
 
     const handleSendMessage = () => {
         if (inputValue.trim()) {
-            webSocketService.sendMessage(inputValue);
             setInputValue(""); // Clear the input field after sending
         }
     };
@@ -33,7 +25,7 @@ const WebSocketButton: React.FC = () => {
     return (
         <div>
             <h2>WebSocket Service with Button Example</h2>
-            <p>Message from server: {message}</p>
+            <p>Message from server: {JSON.stringify(data)}</p>
             <input
                 type="text"
                 value={inputValue}
