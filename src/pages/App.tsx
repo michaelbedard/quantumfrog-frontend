@@ -1,13 +1,52 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import logo from '../assets/logo.svg';
 import './App.css';
 import backgroundworld from './../assets/backgroundworld.jpg';
 import CustomButton from "../components/CustomButton";
+import useMousePosition from '../_misc/hooks/useMousePosition';
+
+
+
 
 function App() {
 
-    const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
+    const [backgroundPosition, setBackgroundPosition] = useState< {x: number; y: number}>({ x: 0, y: 0 });
+    const [mousePosition, setMousePosition] = useMousePosition();
 
+    const screenwidth : number = window.innerWidth;
+    const screenheight : number = window.innerHeight;
+    const centerCoord : {x: number, y:number} = {x : screenwidth/2,  y: screenheight/2};
+
+
+    const mouseCoord : {x: number, y:number} = {x: mousePosition.x - centerCoord.x,y: mousePosition.y - centerCoord.y}
+    const isMoving : boolean = true
+
+    console.log(mouseCoord.x, mouseCoord.y, isMoving);
+
+    useEffect(() => {
+        const updateMousePosition = (ev : MouseEvent) => {
+          setMousePosition({ x: ev.clientX, y: ev.clientY });
+        };
+        
+        window.addEventListener('mousemove', updateMousePosition);
+    
+        return () => {
+          window.removeEventListener('mousemove', updateMousePosition);
+        };
+      }, []);
+
+
+
+        const movement = 10;
+        if(isMoving) {
+            const angle : number = Math.atan(mouseCoord.y/mouseCoord.x) - Math.PI/2
+            console.log(angle)
+        }
+      
+
+        const handleMouseDown = () => {
+            
+        }
     const handleKeyDown = (e : any) => {
         const movement = 10;
 
@@ -31,6 +70,10 @@ function App() {
         }
     };
 
+
+
+
+
   return (
       <div className="App" onKeyDown={handleKeyDown} tabIndex={0} style={{ outline: 'none', backgroundColor: 'lightblue'  }}>
           <div>
@@ -48,8 +91,8 @@ function App() {
               </header>
               <div>
 
-              </div>
-               Moving background
+             </div>
+              Moving background
               <div
                   style={{
                       position: "absolute",
@@ -80,6 +123,14 @@ function App() {
           </div>
       </div>
   );
+
+
+  
+
+
+
+
+
 }
 
 export default App;
