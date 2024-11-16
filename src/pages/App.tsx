@@ -89,10 +89,6 @@ function App() {
                   }}>
                   Qubit 000 + 111
               </header>
-              <div>
-
-             </div>
-              Moving background
               <div
                   style={{
                       position: "absolute",
