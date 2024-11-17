@@ -25,7 +25,7 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                  position: "relative",
                  width: "100%",
                  height: "100%",
-                 transform: rotationTransform,
+                 transform: "rotate("+props.rotate+"deg)",
                  border: "10px solid pink"
              }}
         >
@@ -43,6 +43,7 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 isLocked: false,
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize,
+
             }}/>
 
             {/*<Door props={{*/}

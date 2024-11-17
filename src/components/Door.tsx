@@ -10,28 +10,43 @@ interface DoorProps {
     x: number;
     y: number;
     backgroundSize: { width: number; height: number };
+    rotation: number;
 }
 
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {
     const [doorCoordinates, setDoorCoordinates] = useState({x: 0, y: 0});
     const [showInformationCard, setShowInformationCard] = useState(false);
     const [isLookingAtDoor, setIsLookingAtDoor] = useState(false);
-    const proximityThreshold = 100;
+    const proximityThreshold = 150;
 
     // set door position
     useEffect(() => {
-        const xCoordinate = props.backgroundSize.width/2 - props.x * props.backgroundSize.width;
-        const yCoordinate = props.backgroundSize.height/2 - props.y * props.backgroundSize.height;
-        setDoorCoordinates({x: xCoordinate, y: yCoordinate});
+
+        const rotationRadians = (props.rotation * Math.PI) / 180;
+        var xCoordinate = props.backgroundSize.width/2 - props.x * props.backgroundSize.width;
+        var yCoordinate = props.backgroundSize.height/2 - props.y * props.backgroundSize.height;
+
+        const xFinal = xCoordinate * Math.cos(rotationRadians) - yCoordinate * Math.sin(rotationRadians)
+        const yFinal = xCoordinate * Math.sin(rotationRadians) + yCoordinate * Math.cos(rotationRadians)
+
+        setDoorCoordinates({x: xFinal, y: yFinal});
     }, [props.backgroundSize, props.x, props.y]);
 
     // check if we should open door
     useEffect(() => {
+
+        const rotationRadians = (props.rotation * Math.PI) / 180;
+
+        const newPlayerX = props.playerCoordinates.x 
+        const newPlayerY = props.playerCoordinates.y
         const distance = Math.sqrt(
-            Math.pow(doorCoordinates.x - props.playerCoordinates.x, 2) +
-            Math.pow(doorCoordinates.y - props.playerCoordinates.y, 2)
+            Math.pow(doorCoordinates.x - newPlayerX, 2) +
+            Math.pow(doorCoordinates.y - newPlayerY, 2)
         );
-        if (distance <= proximityThreshold) {
+
+        console.log({distance, props, doorCoordinates})
+
+        if (distance <= proximityThreshold && doorCoordinates.x !=0) {
             if (props.isLocked) {
                 console.log("The door is locked. You can't pass!");
                 setShowInformationCard(false);
