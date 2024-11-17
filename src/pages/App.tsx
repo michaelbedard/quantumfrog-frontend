@@ -46,54 +46,60 @@ function App() {
     }, [backgroundSize]);
 
     return (
-        <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
-            <div className="App" id={isStoryEnded ? "background" : "black"} draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
-                <div draggable="false">
-                    <header draggable="false"
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                zIndex: 10,
-                                textAlign: 'center',
-                            }}>
-                        Qubit 000 + 111
-                    </header>
+        <>
+            <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
+                <div className="App" id={isStoryEnded ? "background" : "black"} draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
+                    <div draggable="false">
+                        <header draggable="false"
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                    zIndex: 10,
+                                    textAlign: 'center',
+                                }}>
+                            Qubit 000 + 111
+                        </header>
 
-                    <StartScreenOverlay isStoryEnded={isStoryEnded} setIsStoryEnded={setIsStoryEnded}>
-                        <div draggable="false"
+                        <StartScreenOverlay isStoryEnded={isStoryEnded} setIsStoryEnded={setIsStoryEnded}>
+                            <div draggable="false"
+                                 style={{
+                                     position: "absolute",
+                                     top: `${backgroundPosition.y}px`,
+                                     left: `${backgroundPosition.x}px`,
+                                     width: "300vw",
+                                     height: "300vh",
+                                     overflow: "hidden",
+                                 }}
+                            >
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation}} />
+                            </div>
+                        </StartScreenOverlay>
+
+                        <div
+                            draggable="false"
                             style={{
                                 position: "absolute",
-                                top: `${backgroundPosition.y}px`,
-                                left: `${backgroundPosition.x}px`,
-                                width: "300vw",
-                                height: "300vh",
-                                overflow: "hidden",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                zIndex: 10,
                             }}
                         >
-                            <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation}} />
+                            <img draggable="false" src={frog} className="App-logo" alt="logo"/>
                         </div>
-                    </StartScreenOverlay>
-
-                    <div
-                        draggable="false"
-                        style={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            zIndex: 10,
-                        }}
-                    >
-                        <img draggable="false" src={frog} className="App-logo" alt="logo"/>
                     </div>
                 </div>
+
+            </UserControls>
+
+            <div style={{position: 'absolute', top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 100}}>
+                <div id="portal-root"></div>
             </div>
-           
-        </UserControls>
-    );
+        </>
+    )
 }
 
 export default App;

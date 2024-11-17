@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Coordinates} from "../pages/App";
+import InformationCard from "./InformationCard";
+import ReactDOM from "react-dom";
 
 interface DoorProps {
     backgroundImage: string;
@@ -12,6 +14,7 @@ interface DoorProps {
 
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {
     const [doorCoordinates, setDoorCoordinates] = useState({x: 0, y: 0});
+    const [showInformationCard, setShowInformationCard] = useState(false);
     const proximityThreshold = 50;
 
     // set door position
@@ -30,11 +33,35 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
         if (distance <= proximityThreshold) {
             if (props.isLocked) {
                 console.log("The door is locked. You can't pass!");
+                setShowInformationCard(false);
             } else {
                 console.log("The door is unlocked. You can pass!");
+                if (!showInformationCard) {
+                    setShowInformationCard(true);
+                }
             }
+        } else {
+            setShowInformationCard(false); // Hide card if player moves away
         }
     }, [props.playerCoordinates, props.x, props.y, props.isLocked, props.backgroundSize]);
+
+    // Portal rendering logic
+    const renderInformationCard = () => {
+        if (showInformationCard) {
+            console.log("The door is unlocked. You can pass!");
+
+            return ReactDOM.createPortal(
+                <InformationCard
+                    title="Z door"
+                    description="You have successfully unlocked the door. You can proceed."
+                    buttonLabel="Enter"
+                    onButtonClick={() => setShowInformationCard(false)} // Close the card
+                />,
+                document.getElementById("portal-root") as HTMLElement
+            );
+        }
+        return null;
+    };
 
     return (
         <>
@@ -47,6 +74,7 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
                 transform: "translate(-50%, -50%)",
                 objectFit: "cover",
             }}/>
+            {renderInformationCard()}
         </>
     )
 }
