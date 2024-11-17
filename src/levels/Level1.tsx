@@ -5,9 +5,11 @@ import door2 from "../assets/door2.png";
 import door3 from "../assets/door3.png";
 import Door from "../components/Door";
 import {PlayerCoordinates} from "../pages/App";
+import { isStringLiteral } from "typescript";
 
 interface LevelProps {
     Coordinate: PlayerCoordinates ;
+    Rotate: number;
 }
 
 const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {
@@ -28,8 +30,15 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
     }, []);
 
     useEffect(() => {
-        console.log(props.Coordinate)
+        //console.log(props.Coordinate)
     }, [props.Coordinate.x]);
+
+
+
+
+
+
+    const rotationTransform = "rotate("+props.Rotate+"deg)"
 
     return (
         <div
@@ -39,13 +48,19 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                  width: "100%",
                  height: "100%",
                  overflow: "hidden",
+                 transform: rotationTransform,
+                 border: "10px solid pink"
+
              }}
         >
+            
+            
             <img draggable="false" src={backgroundworld} alt={"background"} style={{
                 position: "absolute",
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+
             }}/>
 
             <Door props={{
@@ -54,7 +69,7 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                 y: 0.7,
                 isLocked: false,
                 PlayerCoordinates: props.Coordinate,
-                backgroundSize
+                backgroundSize,
             }}/>
 
             <Door props={{
@@ -63,7 +78,8 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                 y: 0.2,
                 isLocked: false,
                 PlayerCoordinates: props.Coordinate,
-                backgroundSize
+                backgroundSize,
+
             }}/>
 
             <Door props={{
@@ -72,7 +88,8 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                 y: 0.7,
                 isLocked: false,
                 PlayerCoordinates: props.Coordinate,
-                backgroundSize
+                backgroundSize,
+
             }}/>
         </div>
     )

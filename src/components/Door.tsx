@@ -19,7 +19,7 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
             Math.pow(props.PlayerCoordinates.y - props.y * props.backgroundSize.height, 2)
         );
 
-        console.log(distance);
+       // console.log(distance);
 
         if (distance <= proximityThreshold) {
             if (props.isLocked) {
@@ -34,6 +34,8 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
         <>
             <img draggable="false" src={props.backgroundImage} alt={"door"} style={{
                 position: "absolute",
+                width: "10%",
+                height: "10%",
                 top: `${props.y * 100}%`,
                 left: `${props.x * 100}%`,
                 transform: "translate(-50%, -50%)",

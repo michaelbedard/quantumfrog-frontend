@@ -1,6 +1,6 @@
 import useMousePosition from "../hooks/useMousePosition";
 import useMouseDown from "../hooks/useMouseDown";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface UserControlsProps {
     backgroundPosition: { x: number; y: number };
@@ -10,7 +10,6 @@ interface UserControlsProps {
 }
 
 const UserControls: React.FC<UserControlsProps> = ({ backgroundPosition, setBackgroundPosition, Style, children }) => {
-
     const [mousePosition, setMousePosition] = useMousePosition();
     const [mouseDown, setMouseDown] = useMouseDown();
     const movement = 3;
