@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState} from 'react';
 import frog from '../assets/frog.png';
 import './App.css';
 import UserControls from "../utils/UserControl";
-import Level1 from "../levels/Level1";
+import World from "../components/World";
 import StartScreenOverlay from "../components/StartScreenOverlay";
 import useRotation from '../hooks/useRotation';
 import useStoryEnded from '../hooks/useStoryEnded';
@@ -19,6 +19,8 @@ function App() {
     const [backgroundPosition, setBackgroundPosition] = useState<{x: number, y:number}>({x: 0, y: 0});
     const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
     const backgroundRef = useRef<HTMLDivElement>(null);
+    const [rotation] = useRotation();
+    const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
 
     // listen to background size change
     useEffect(() => {
@@ -45,19 +47,6 @@ function App() {
 
     return (
         <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
-            <div className="App" draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
-=======
-    const [backgroundPosition, setBackgroundPosition] = useState<PlayerCoordinates>({x: 0, y: 0});
-    const [rotation] = useRotation();
-    const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
-
-
-
-
-    return (
-        <UserControls backgroundPosition={backgroundPosition} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
-        
-
             <div className="App" id={isStoryEnded ? "background" : "black"} draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
                 <div draggable="false">
                     <header draggable="false"
@@ -84,8 +73,7 @@ function App() {
                                 overflow: "hidden",
                             }}
                         >
-                            <Level1 props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, Rotate: rotation}} />
-
+                            <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation}} />
                         </div>
                     </StartScreenOverlay>
 

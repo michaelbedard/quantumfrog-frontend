@@ -3,7 +3,7 @@ import backgroundworld from "../assets/backgroundworld.jpg";
 import door1 from "../assets/door1.png";
 import door2 from "../assets/door2.png";
 import door3 from "../assets/door3.png";
-import Door from "../components/Door";
+import Door from "./Door";
 
 import {Coordinates} from "../pages/App";
 
@@ -11,16 +11,11 @@ interface LevelProps {
     backgroundRef: React.RefObject<HTMLDivElement>;
     backgroundSize: { width: number; height: number };
     coordinate: Coordinates ;
+    rotate: number
 }
 
-const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {
-
-
-
-
-
-
-    const rotationTransform = "rotate("+props.Rotate+"deg)"
+const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {
+    const rotationTransform = "rotate("+props.rotate+"deg)"
 
     return (
         <div
@@ -35,8 +30,6 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
 
              }}
         >
-            
-            
             <img draggable="false" src={backgroundworld} alt={"background"} style={{
                 position: "absolute",
                 width: "100%",
@@ -76,4 +69,4 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
     )
 }
 
-export default Level1
+export default World
