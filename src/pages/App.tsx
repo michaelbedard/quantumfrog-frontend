@@ -34,19 +34,19 @@ function App() {
     const valueLaBarre = -0.2;
 
     // register user
-    useEffect(() => {
-        const register = async () => {
-            const userData = await registerUser();
-            const parsedData = JSON.parse(userData) as UserData;
-
-            console.log(parsedData)
-
-            setClientId(parsedData.id)
-        };
-
-        console.log("Register!!!")
-        register();
-    }, []);
+    // useEffect(() => {
+    //     const register = async () => {
+    //         const userData = await registerUser();
+    //         const parsedData = JSON.parse(userData) as UserData;
+    //
+    //         console.log(parsedData)
+    //
+    //         setClientId(parsedData.id)
+    //     };
+    //
+    //     console.log("Register!!!")
+    //     register();
+    // }, []);
 
     // listen to background size change
     useEffect(() => {
