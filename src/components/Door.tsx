@@ -10,6 +10,7 @@ interface DoorProps {
     x: number;
     y: number;
     backgroundSize: { width: number; height: number };
+    rotation: number;
 }
 
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {

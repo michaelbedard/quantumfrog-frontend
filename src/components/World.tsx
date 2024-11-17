@@ -41,7 +41,8 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 y: 0.60,
                 isLocked: false,
                 playerCoordinates: props.coordinate,
-                backgroundSize: props.backgroundSize
+                backgroundSize: props.backgroundSize,
+                rotation: props.rotate
             }}/>
 
             {/*<Door props={{*/}
