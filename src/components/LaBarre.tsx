@@ -12,13 +12,22 @@ const LaBarre: React.FC<{props: LaBarreProps}> = ({ props }) => {
     const rightFill = clampedValue > 0 ? clampedValue : 0;
     const leftFill = clampedValue < 0 ? -clampedValue : 0;
 
-    // Styles for the outer container and the two halves
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
         width: "100%",
-        height: "2vh",
-        backgroundColor: "white",
-        border: "1px solid #ccc", // Optional: for better visibility of the bar border
+        height: "100%",
         display: "flex",
+        justifyContent: "center", // Center horizontally
+        alignItems: "center", // Center vertically
+    };
+
+    // Styles for the outer container and the two halves
+    const barStyle: React.CSSProperties = {
+        width: "50%", // 70% of the screen width
+        height: "3vh",
+        backgroundColor: "white",
+        border: "1px solid #ccc",
+        display: "flex",
+        position: "relative",
     };
 
     const leftHalfStyle = {
@@ -36,19 +45,22 @@ const LaBarre: React.FC<{props: LaBarreProps}> = ({ props }) => {
     };
     if(clampedValue <= 0) {
         return (
-        <div style={containerStyle}>
-            <div style={rightHalfStyle}></div>
-            <div style={leftHalfStyle}></div>
-        </div>
+            <div style={containerStyle}>
+                <div style={barStyle}>
+                    <div style={leftHalfStyle}></div>
+                    <div style={rightHalfStyle}></div>
+                </div>
+            </div>
         )
     } else {
         return (
             <div style={containerStyle}>
-                <div style={leftHalfStyle}></div>
-
-                <div style={rightHalfStyle}></div>
+                <div style={barStyle}>
+                    <div style={leftHalfStyle}></div>
+                    <div style={rightHalfStyle}></div>
+                </div>
             </div>
-            )
+        )
     }
 };
 

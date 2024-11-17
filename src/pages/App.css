@@ -17,5 +17,11 @@
 
 body {
   margin: 0;
-  
+}
+
+[draggable="true"] {
+  user-drag: none; /* For Safari */
+  user-select: none; /* Prevents selection */
+  -webkit-user-drag: none; /* For WebKit browsers */
+  pointer-events: none; /* Disables drag interaction */
 }

@@ -15,7 +15,8 @@ interface DoorProps {
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {
     const [doorCoordinates, setDoorCoordinates] = useState({x: 0, y: 0});
     const [showInformationCard, setShowInformationCard] = useState(false);
-    const proximityThreshold = 50;
+    const [isLookingAtDoor, setIsLookingAtDoor] = useState(false);
+    const proximityThreshold = 100;
 
     // set door position
     useEffect(() => {
@@ -36,12 +37,14 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
                 setShowInformationCard(false);
             } else {
                 console.log("The door is unlocked. You can pass!");
-                if (!showInformationCard) {
+                if (!isLookingAtDoor) {
                     setShowInformationCard(true);
+                    setIsLookingAtDoor(true);
                 }
             }
         } else {
             setShowInformationCard(false); // Hide card if player moves away
+            setIsLookingAtDoor(false)
         }
     }, [props.playerCoordinates, props.x, props.y, props.isLocked, props.backgroundSize]);
 
@@ -67,12 +70,11 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
         <>
             <img draggable="false" src={props.backgroundImage} alt={"door"} style={{
                 position: "absolute",
-                width: "10%",
-                height: "10%",
+                height: "15%",
                 top: `${props.y * 100}%`,
                 left: `${props.x * 100}%`,
                 transform: "translate(-50%, -50%)",
-                objectFit: "cover",
+                objectFit: "contain",
             }}/>
             {renderInformationCard()}
         </>

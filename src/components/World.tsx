@@ -24,18 +24,15 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                  position: "relative",
                  width: "100%",
                  height: "100%",
-                 overflow: "hidden",
                  transform: rotationTransform,
                  border: "10px solid pink"
-
              }}
         >
             <img draggable="false" src={backgroundworld} alt={"background"} style={{
                 position: "absolute",
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
-
+                objectFit: "contain",
             }}/>
 
             <Door props={{
@@ -43,7 +40,6 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 x: 0.60,
                 y: 0.60,
                 isLocked: false,
-
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize
             }}/>
