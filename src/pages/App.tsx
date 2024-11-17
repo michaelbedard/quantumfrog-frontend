@@ -7,6 +7,7 @@ import StartScreenOverlay from "../components/StartScreenOverlay";
 import useRotation from '../hooks/useRotation';
 import useStoryEnded from '../hooks/useStoryEnded';
 import LaBarre from '../components/LaBarre';
+import {registerUser} from "../services/NetworkService";
 
 
 export interface Coordinates {
@@ -14,8 +15,14 @@ export interface Coordinates {
     y: number ;
 }
 
-function App() {
+export interface UserData {
+    id: number;
+    state: number[];
+    angle: number;
+}
 
+function App() {
+    const [clientId, setClientId] = useState<number>(0);
     const [playerCoordinates, setPlayerCoordinates] = useState<Coordinates>({x: 0, y: 0});
     const [backgroundPosition, setBackgroundPosition] = useState<{x: number, y:number}>({x: 0, y: 0});
     const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
@@ -25,6 +32,18 @@ function App() {
 
 
     const valueLaBarre = -0.2;
+
+    // register user
+    useEffect(() => {
+        const register = async () => {
+            const userData = await registerUser();
+            const parsedData = JSON.parse(userData) as UserData;
+
+            setClientId(userData.id)
+        };
+
+        register();
+    }, []);
 
     // listen to background size change
     useEffect(() => {

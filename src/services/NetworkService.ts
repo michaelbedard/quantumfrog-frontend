@@ -1,18 +1,25 @@
 import axios from 'axios';
 
 
-export async function getStateVector(lien = 'articles') {
-  const res = await axios.get(`${lien}`);
-  return res.data;
+export async function registerUser() {
+    try {
+        const response = await axios.get('https://quantumfrog-backend.onrender.com/register_user');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error; // Re-throw the error for further handling if necessary
+    }
 }
 
-export async function updateWorld(data : any) {
-    const angle : number = 45;
-    return angle;
-  await axios.put('/articles', {
-    title: data.title,
-  });
-  return true;
+
+export async function getUserData() {
+    try {
+        const response = await axios.get('https://quantumfrog-backend.onrender.com/get_user');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error; // Re-throw the error for further handling if necessary
+    }
 }
 
 
