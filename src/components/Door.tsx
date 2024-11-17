@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Coordinates} from "../pages/App";
+import {Coordinates, UserData} from "../pages/App";
 import InformationCard from "./InformationCard";
 import ReactDOM from "react-dom";
+import {getBracket, getProbability, traverseGate} from "../services/NetworkService";
 
 interface DoorProps {
     backgroundImage: string;
@@ -10,7 +11,13 @@ interface DoorProps {
     x: number;
     y: number;
     backgroundSize: { width: number; height: number };
+
+    setWorldId:  React.Dispatch<React.SetStateAction<number>>;
+    clientId: number;
+    setRotation:  React.Dispatch<React.SetStateAction<number>>;
+    setValue:  React.Dispatch<React.SetStateAction<number>>;
     id: number;
+
 }
 
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {
@@ -64,7 +71,24 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
                     buttonLabel="Enter"
                     onButtonClick={() => {
                         setShowInformationCard(false)
-                    }} // Close the card
+
+                        console.log("NETWORK")
+
+                        traverseGate(props.clientId, "h").then((r : any) => {
+
+                            console.log(r)
+
+                            console.log(parseFloat(r.angle))
+                            console.log(Number(r.angle))
+                            props.setRotation(parseFloat(r.angle))
+                        })
+                        getProbability(props.clientId).then((r : number) => {
+                            props.setValue(r)
+                        })
+                        // getBracket().then(r => {
+                        //     console.log(r)
+                        // })
+                    }}
                 />,
                 document.getElementById("portal-root") as HTMLElement
             );

@@ -14,10 +14,17 @@ interface LevelProps {
     coordinate: Coordinates ;
     rotate: number;
     isStoryEnded: boolean;
+
+    setWorldId:  React.Dispatch<React.SetStateAction<number>>;
+    clientId: number;
+    setRotation:  React.Dispatch<React.SetStateAction<number>>;
+    setValue:  React.Dispatch<React.SetStateAction<number>>;
+
     door1Position: Coordinates;
     door2Position: Coordinates;
     door3Position: Coordinates;
     door4Position: Coordinates;
+
 }
 
 const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {
@@ -47,7 +54,12 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 isLocked: false,
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize,
+                setWorldId: props.setWorldId,
+                clientId: props.clientId,
+                setRotation: props.setRotation,
+                setValue : props.setValue,
                 id: 1
+
             }}/>
 
             <Door props={{

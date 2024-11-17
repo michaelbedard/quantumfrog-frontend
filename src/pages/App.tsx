@@ -29,28 +29,26 @@ function App() {
     const [backgroundPosition, setBackgroundPosition] = useState<{x: number, y:number}>({x: 0, y: 0});
     const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
     const backgroundRef = useRef<HTMLDivElement>(null);
-    const [rotation] = useRotation();
+    const [rotation, setRotation] = useRotation();
     const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
     const [showInformationCard, setShowInformationCard] = useState(false);
-    const [worldId, setWorldId] = useState(4);
-
-
-    const valueLaBarre = -0.2;
+    const [worldId, setWorldId] = useState(0);
+    const [valueLaBarre, setValueLaBarre] = useState(0);
 
     // register user
-    // useEffect(() => {
-    //     const register = async () => {
-    //         const userData = await registerUser();
-    //         const parsedData = JSON.parse(userData) as UserData;
-    //
-    //         console.log(parsedData)
-    //
-    //         setClientId(parsedData.id)
-    //     };
-    //
-    //     console.log("Register!!!")
-    //     register();
-    // }, []);
+    useEffect(() => {
+        const register = async () => {
+            const userData = await registerUser();
+            const parsedData = JSON.parse(userData) as UserData;
+
+            console.log(parsedData)
+
+            setClientId(parsedData.id)
+        };
+
+        console.log("Register!!!")
+        register();
+    }, []);
 
     // listen to background size change
     useEffect(() => {
@@ -142,6 +140,7 @@ function App() {
                             >
 
                                 {renderWorld(worldId)}
+
                             </div>
                         </StartScreenOverlay>
 
