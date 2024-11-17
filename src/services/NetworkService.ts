@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {UserData} from "../pages/App";
 
 export async function registerUser() {
     try {
@@ -18,7 +19,17 @@ export async function traverseGate(clientId: number, gate: string) {
                 gate : gate,     // Adds gate as a query parameter
             },
         });
-        return response.data;
+
+        const parsedData: UserData = JSON.parse(response.data);
+
+        console.log(typeof parsedData);
+        console.log(Object.keys(parsedData));
+
+        console.log(parsedData)
+        console.log(parsedData.angle)
+        console.log(parsedData["angle"])
+
+        return parsedData
     } catch (error) {
         console.error('Error fetching user data:', error);
         throw error;

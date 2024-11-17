@@ -24,6 +24,7 @@ interface LevelProps {
     door2Position: Coordinates;
     door3Position: Coordinates;
     door4Position: Coordinates;
+    setWordTitle: React.Dispatch<React.SetStateAction<string>>;
 
 }
 
@@ -58,6 +59,7 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 clientId: props.clientId,
                 setRotation: props.setRotation,
                 setValue : props.setValue,
+                setWordTitle: props.setWordTitle,
                 id: 1
 
             }}/>
@@ -69,6 +71,11 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 isLocked: false,
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize,
+                setWorldId: props.setWorldId,
+                clientId : props.clientId,
+                setRotation: props.setRotation,
+                setValue: props.setValue,
+                setWordTitle: props.setWordTitle,
                 id: 2
 
             }}/>
@@ -79,6 +86,11 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 isLocked: false,
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize,
+                setWorldId: props.setWorldId,
+                clientId : props.clientId,
+                setRotation: props.setRotation,
+                setValue: props.setValue,
+                setWordTitle: props.setWordTitle,
                 id: 3
 
             }}/>  
@@ -87,8 +99,13 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 x: props.door4Position.x,
                 y: props.door4Position.y,
                 isLocked: false,
+                            setWordTitle: props.setWordTitle,
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize,
+                            setWorldId: props.setWorldId,
+                            clientId : props.clientId,
+                            setRotation: props.setRotation,
+                            setValue: props.setValue,
                 id: 4
             }}/>    
 

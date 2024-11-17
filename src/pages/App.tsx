@@ -34,6 +34,7 @@ function App() {
     const [showInformationCard, setShowInformationCard] = useState(false);
     const [worldId, setWorldId] = useState(0);
     const [valueLaBarre, setValueLaBarre] = useState(0);
+    const [wordTitle, setWordTitle] = useState("|0>");
 
     // register user
     useEffect(() => {
@@ -86,7 +87,7 @@ function App() {
         if (showInformationCard) {
             return ReactDOM.createPortal(
                 <InformationCard
-                    title="WOLD "
+                    title="<0|"
                     description="XXX"
                     buttonLabel="Got it!"
                     onButtonClick={() => setShowInformationCard(false)} // Close the card
@@ -121,7 +122,7 @@ function App() {
                                 alignItems: "center", // Center content vertically (optional)
                             }}>
                                 <p style={{fontWeight: 'bold', fontSize: '24px'}}>
-                                    WORLD
+                                    {wordTitle}
                                 </p>
                             </div>
                             <LaBarre props={{value: valueLaBarre, isStoryEnded: isStoryEnded}}/>
@@ -182,7 +183,11 @@ function App() {
                 door2Position: worldConfig.door2Position,
                 door3Position: worldConfig.door3Position,
                 door4Position: worldConfig.door4Position,
-                
+                setWorldId: setWorldId,
+                clientId: clientId,
+                setRotation: setRotation,
+                setValue: setValueLaBarre,
+                setWordTitle: setWordTitle,
             }} />
         );
     }

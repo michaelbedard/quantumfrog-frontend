@@ -17,7 +17,7 @@ interface DoorProps {
     setRotation:  React.Dispatch<React.SetStateAction<number>>;
     setValue:  React.Dispatch<React.SetStateAction<number>>;
     id: number;
-
+    setWordTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {
@@ -76,11 +76,13 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
 
                         traverseGate(props.clientId, "h").then((r : any) => {
 
-                            console.log(r)
+                            const worldId = getWorldIdAngle(r.angle)
+                            const worldtitlr = getWorldTitleAngle(r.angle)
 
-                            console.log(parseFloat(r.angle))
-                            console.log(Number(r.angle))
-                            props.setRotation(parseFloat(r.angle))
+                            props.setWordTitle(worldtitlr)
+
+                            props.setWorldId(worldId)
+                            props.setRotation(r.angle)
                         })
                         getProbability(props.clientId).then((r : number) => {
                             props.setValue(r)
@@ -137,6 +139,49 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
             {renderInformationCard(props.id)}
         </>
     )
+}
+
+function getWorldTitleAngle(angle : number) {
+
+    angle = angle + 90
+
+    const id: { [key: number]: any} = {
+        0: "|0>",
+        22.5: "|1>",
+        45: "|+>",
+        67.5: "|->",
+        90: "|4>",
+        112.5: "|5>",
+        135: "|>",
+        157.5: "|7>",
+        180: "|0>",
+
+    };
+
+
+    return id[angle] || id[0];
+}
+
+
+function getWorldIdAngle(angle : number) {
+
+    angle = angle + 90
+
+    const id: { [key: number]: any} = {
+        0: 0,
+        22.5: 1,
+        45: 2,
+        67.5: 3,
+        90: 4,
+        112.5: 5,
+        135: 6,
+        157.5: 7,
+        180: 0,
+
+    };
+
+
+    return id[angle] || id[0];
 }
 
 export default Door;
