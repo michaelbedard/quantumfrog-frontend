@@ -6,20 +6,42 @@ import UserControls from "../utils/UserControl";
 import Level1 from "../levels/Level1";
 import StartScreenOverlay from "../components/StartScreenOverlay";
 
-export interface PlayerCoordinates {
+export interface Coordinates {
     x: number ;
     y: number ;
 }
 
 function App() {
-    const [backgroundPosition, setBackgroundPosition] = useState<PlayerCoordinates>({x: 0, y: 0});
+    const [playerCoordinates, setPlayerCoordinates] = useState<Coordinates>({x: 0, y: 0});
+    const [backgroundPosition, setBackgroundPosition] = useState<{x: number, y:number}>({x: 0, y: 0});
+    const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
+    const backgroundRef = useRef<HTMLDivElement>(null);
 
+    // listen to background size change
     useEffect(() => {
-        console.log(backgroundPosition.x)
-    }, [backgroundPosition]);
+        const updateBackgroundSize = () => {
+            if (backgroundRef.current) {
+                const { offsetWidth, offsetHeight } = backgroundRef.current;
+                setBackgroundSize({ width: offsetWidth, height: offsetHeight });
+            }
+        };
+
+        updateBackgroundSize();
+        window.addEventListener("resize", updateBackgroundSize);
+        return () => window.removeEventListener("resize", updateBackgroundSize);
+    }, []);
+
+    // set initial position based on window height and width
+    useEffect(() => {
+        if (backgroundSize.width && backgroundSize.height) {
+            const centerX = (window.innerWidth - backgroundSize.width) / 2;
+            const centerY = (window.innerHeight - backgroundSize.height) / 2;
+            setBackgroundPosition({ x: centerX, y: centerY });
+        }
+    }, [backgroundSize]);
 
     return (
-        <UserControls backgroundPosition={backgroundPosition} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
+        <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
             <div className="App" draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
                 <div draggable="false">
                     <header draggable="false"
@@ -28,9 +50,9 @@ function App() {
                                 top: 0,
                                 left: 0,
                                 width: '100%',
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional for readability
-                                zIndex: 10, // Ensures header is above the background
-                                textAlign: 'center', // Optional for centering text
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                zIndex: 10,
+                                textAlign: 'center',
                             }}>
                         Qubit 000 + 111
                     </header>
@@ -41,12 +63,12 @@ function App() {
                                 position: "absolute",
                                 top: `${backgroundPosition.y}px`,
                                 left: `${backgroundPosition.x}px`,
-                                width: "200vw",
-                                height: "200vh",
+                                width: "300vw",
+                                height: "300vh",
                                 overflow: "hidden",
                             }}
                         >
-                            <Level1 props={{Coordinate: backgroundPosition}}/>
+                            <Level1 props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef}} />
 
                         </div>
                     </StartScreenOverlay>
