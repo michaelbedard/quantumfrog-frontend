@@ -8,6 +8,8 @@ import useRotation from '../hooks/useRotation';
 import useStoryEnded from '../hooks/useStoryEnded';
 import LaBarre from '../components/LaBarre';
 import {registerUser} from "../services/NetworkService";
+import ReactDOM from "react-dom";
+import InformationCard from "../components/InformationCard";
 
 
 export interface Coordinates {
@@ -29,24 +31,25 @@ function App() {
     const backgroundRef = useRef<HTMLDivElement>(null);
     const [rotation] = useRotation();
     const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
+    const [showInformationCard, setShowInformationCard] = useState(false);
 
 
     const valueLaBarre = -0.2;
 
     // register user
-    useEffect(() => {
-        const register = async () => {
-            const userData = await registerUser();
-            const parsedData = JSON.parse(userData) as UserData;
-
-            console.log(parsedData)
-
-            setClientId(parsedData.id)
-        };
-
-        console.log("Register!!!")
-        register();
-    }, []);
+    // useEffect(() => {
+    //     const register = async () => {
+    //         const userData = await registerUser();
+    //         const parsedData = JSON.parse(userData) as UserData;
+    //
+    //         console.log(parsedData)
+    //
+    //         setClientId(parsedData.id)
+    //     };
+    //
+    //     console.log("Register!!!")
+    //     register();
+    // }, []);
 
     // listen to background size change
     useEffect(() => {
@@ -71,9 +74,33 @@ function App() {
         }
     }, [backgroundSize]);
 
+    const onclick = () => {
+        if (!isStoryEnded){
+            return;
+        }
+
+        setShowInformationCard(true)
+    }
+
+    // Portal rendering logic
+    const renderInformationCard = () => {
+        if (showInformationCard) {
+            return ReactDOM.createPortal(
+                <InformationCard
+                    title="WOLD "
+                    description="XXX"
+                    buttonLabel="Got it!"
+                    onButtonClick={() => setShowInformationCard(false)} // Close the card
+                />,
+                document.getElementById("portal-root") as HTMLElement
+            );
+        }
+        return null;
+    };
+
     return (
         <>
-            <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
+            <UserControls isStoryEnded={isStoryEnded} setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
                 <div className="App" id={isStoryEnded ? "background" : "black"} draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
                     <div draggable="false">
                         <header draggable="false"
@@ -85,10 +112,18 @@ function App() {
                                     zIndex: 10,
                                     textAlign: 'center',
                                 }}>
-                                    <p style={{fontWeight: 'bold', fontSize: '24px'}}>
-                                        WORLD
-                                    </p>
-                                    <LaBarre props={{value:valueLaBarre}}/>
+                            <div onClick={onclick} style={{
+                                display: isStoryEnded ? "flex" : "none",
+                                cursor: isStoryEnded ? "pointer" : "default",
+                                transition: "opacity 0.3s ease",
+                                justifyContent: "center", // Center content horizontally
+                                alignItems: "center", // Center content vertically (optional)
+                            }}>
+                                <p style={{fontWeight: 'bold', fontSize: '24px'}}>
+                                    WORLD
+                                </p>
+                            </div>
+                            <LaBarre props={{value: valueLaBarre, isStoryEnded: isStoryEnded}}/>
                         </header>
 
                         <StartScreenOverlay isStoryEnded={isStoryEnded} setIsStoryEnded={setIsStoryEnded}>
@@ -102,7 +137,7 @@ function App() {
                                      overflow: "hidden",
                                  }}
                             >
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation}} />
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
                             </div>
                         </StartScreenOverlay>
 
@@ -120,6 +155,8 @@ function App() {
                         </div>
                     </div>
                 </div>
+
+                {renderInformationCard()}
 
             </UserControls>
 
