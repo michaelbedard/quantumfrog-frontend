@@ -4,6 +4,7 @@ import door1 from "../assets/door1.png";
 import door2 from "../assets/door2.png";
 import door3 from "../assets/door3.png";
 import Door from "../components/Door";
+
 import {Coordinates} from "../pages/App";
 
 interface LevelProps {
@@ -14,6 +15,13 @@ interface LevelProps {
 
 const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {
 
+
+
+
+
+
+    const rotationTransform = "rotate("+props.Rotate+"deg)"
+
     return (
         <div
             ref={props.backgroundRef}
@@ -22,13 +30,19 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                  width: "100%",
                  height: "100%",
                  overflow: "hidden",
+                 transform: rotationTransform,
+                 border: "10px solid pink"
+
              }}
         >
+            
+            
             <img draggable="false" src={backgroundworld} alt={"background"} style={{
                 position: "absolute",
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+
             }}/>
 
             <Door props={{
@@ -36,6 +50,7 @@ const Level1: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} :
                 x: 0.60,
                 y: 0.60,
                 isLocked: false,
+
                 playerCoordinates: props.coordinate,
                 backgroundSize: props.backgroundSize
             }}/>

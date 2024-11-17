@@ -1,8 +1,16 @@
 import React, {useState} from 'react';
+import useStoryEnded from '../hooks/useStoryEnded';
 
-function StartScreenOverlay({ children }  : {children : any}) {
+function StartScreenOverlay({
+    children, 
+    isStoryEnded, 
+    setIsStoryEnded
+}: {
+    children: any;
+    isStoryEnded: boolean;
+    setIsStoryEnded: React.Dispatch<React.SetStateAction<boolean>>;
+})  {
     const [step, setStep] = useState(0);
-    const [isStoryEnded, setIsStoryEnded] = useState(false);
 
     const handleClick = () => {
         if (step === 0) {
@@ -28,8 +36,8 @@ function StartScreenOverlay({ children }  : {children : any}) {
     };
 
     return (
-        <div>
-            <div
+        <div draggable="false">
+            <div draggable="false"
                 style={{
                     position: "absolute",
                     top: 0,
@@ -47,7 +55,7 @@ function StartScreenOverlay({ children }  : {children : any}) {
                 {children}
             </div>
 
-            <div
+            <div draggable="false"
                 style={{
                     position: "absolute",
                     top: "70%",
@@ -63,7 +71,7 @@ function StartScreenOverlay({ children }  : {children : any}) {
                 {getText()}
             </div>
 
-            <div
+            <div draggable="false"
                 style={{
                     position: "absolute",
                     top: "90%",
@@ -76,7 +84,7 @@ function StartScreenOverlay({ children }  : {children : any}) {
                     transition: "opacity 1s ease-in-out",
                 }}
             >
-                <button onClick={handleClick}> Next </button>
+                <button draggable="false" onClick={handleClick}> Next </button>
             </div>
         </div>
     );

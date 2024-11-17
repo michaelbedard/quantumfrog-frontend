@@ -1,7 +1,9 @@
 import useMousePosition from "../hooks/useMousePosition";
 import useMouseDown from "../hooks/useMouseDown";
+
 import { useEffect, useRef } from "react";
 import {Coordinates} from "../pages/App";
+
 
 interface UserControlsProps {
     setPlayerCoordinates: React.Dispatch<React.SetStateAction<Coordinates>>;

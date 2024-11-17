@@ -11,6 +11,11 @@
   pointer-events: none;
 }
 
+#background {
+  background-image: url(../assets/backgroundworld.jpg);
+}
+
 body {
   margin: 0;
+  
 }
