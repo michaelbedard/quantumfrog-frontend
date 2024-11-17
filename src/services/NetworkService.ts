@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const url = 'https://quantumfrog-backend.onrender.com';
+// const url = 'http://127.0.0.1:5000';
 
 export async function registerUser() {
     try {
-        const response = await axios.get('https://quantumfrog-backend.onrender.com/register_user', {
+        const response = await axios.get(url + '/register_user', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
