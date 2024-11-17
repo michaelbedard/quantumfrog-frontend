@@ -6,6 +6,7 @@ import World from "../components/World";
 import StartScreenOverlay from "../components/StartScreenOverlay";
 import useRotation from '../hooks/useRotation';
 import useStoryEnded from '../hooks/useStoryEnded';
+import LaBarre from '../components/LaBarre';
 
 
 export interface Coordinates {
@@ -21,6 +22,9 @@ function App() {
     const backgroundRef = useRef<HTMLDivElement>(null);
     const [rotation] = useRotation();
     const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
+
+
+    const valueLaBarre = 0.5;
 
     // listen to background size change
     useEffect(() => {
@@ -46,22 +50,32 @@ function App() {
     }, [backgroundSize]);
 
     return (
-        <>
-            <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
-                <div className="App" id={isStoryEnded ? "background" : "black"} draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
-                    <div draggable="false">
-                        <header draggable="false"
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
+        <UserControls setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
+            <div className="App" id={isStoryEnded ? "background" : "black"} draggable="false" style={{outline: 'none', backgroundColor: 'black'}}>
+                <div draggable="false">
+                    <header draggable="false"
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                zIndex: 10,
+                                textAlign: 'center',
+                            }}>
+                                <p
+                                style={{     
+                                    padding: 0,
+                                    margin: 0,
                                     width: '100%',
                                     backgroundColor: 'rgba(255, 255, 255, 0.8)',
                                     zIndex: 10,
-                                    textAlign: 'center',
-                                }}>
-                            Qubit 000 + 111
-                        </header>
+                                    textAlign: 'center',}}>
+                                Qubit 000 + 111
+                                </p>
+                                <LaBarre props={{value:valueLaBarre}}/>
+
+
+                    </header>
 
                         <StartScreenOverlay isStoryEnded={isStoryEnded} setIsStoryEnded={setIsStoryEnded}>
                             <div draggable="false"
