@@ -24,8 +24,7 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                  position: "relative",
                  width: "100%",
                  height: "100%",
-                 // transform: "rotate("+props.rotate+"deg)",
-                 transform: "rotate(90deg)",
+                 transform: "rotate("+props.rotate+"deg)",
                  border: "10px solid pink"
              }}
         >
