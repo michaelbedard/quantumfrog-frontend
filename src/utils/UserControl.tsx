@@ -1,15 +1,19 @@
 import useMousePosition from "../hooks/useMousePosition";
 import useMouseDown from "../hooks/useMouseDown";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef } from "react";
+import {Coordinates} from "../pages/App";
+
 
 interface UserControlsProps {
-    backgroundPosition: { x: number; y: number };
+    setPlayerCoordinates: React.Dispatch<React.SetStateAction<Coordinates>>;
     setBackgroundPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
     Style?: React.CSSProperties;
     children: React.ReactNode;
 }
 
-const UserControls: React.FC<UserControlsProps> = ({ backgroundPosition, setBackgroundPosition, Style, children }) => {
+const UserControls: React.FC<UserControlsProps> = ({ setPlayerCoordinates, setBackgroundPosition, Style, children }) => {
+
     const [mousePosition, setMousePosition] = useMousePosition();
     const [mouseDown, setMouseDown] = useMouseDown();
     const movement = 3;
@@ -63,7 +67,14 @@ const UserControls: React.FC<UserControlsProps> = ({ backgroundPosition, setBack
                     const xMove = Math.cos(angle) * movement;
                     const yMove = Math.sin(angle) * movement;
 
-                    setBackgroundPosition((prev) => ({ x: prev.x + xMove, y: prev.y + yMove }));
+                    setBackgroundPosition((prev) => (
+                        { x: prev.x + xMove, y: prev.y + yMove }
+                    ));
+
+                    setPlayerCoordinates((prev) => (
+                        { x: prev.x + xMove, y: prev.y + yMove }
+                    ));
+
                     lastMoveTime.current = timestamp;
                 }
 
