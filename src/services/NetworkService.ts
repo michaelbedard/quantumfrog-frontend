@@ -7,7 +7,8 @@ export async function registerUser() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            withCredentials: true
         });
         return response.data;
     } catch (error) {
