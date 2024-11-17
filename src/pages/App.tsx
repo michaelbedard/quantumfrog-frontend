@@ -32,6 +32,7 @@ function App() {
     const [rotation] = useRotation();
     const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
     const [showInformationCard, setShowInformationCard] = useState(false);
+    const [worldId, setWorldId] = useState(0);
 
 
     const valueLaBarre = -0.2;
@@ -137,6 +138,16 @@ function App() {
                                      overflow: "hidden",
                                  }}
                             >
+                                {if (worldId === 0){
+                                    <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded, door1Posion" 0.1"}} />
+                                }}
+
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
+                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
                                 <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
                             </div>
                         </StartScreenOverlay>

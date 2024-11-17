@@ -12,7 +12,10 @@ interface LevelProps {
     backgroundSize: { width: number; height: number };
     coordinate: Coordinates ;
     rotate: number;
-    isStoryEnded: boolean
+    isStoryEnded: boolean;
+    door1Position: number;
+    door2Position: number;
+    door3Position: number;
 }
 
 const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {

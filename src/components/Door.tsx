@@ -36,7 +36,7 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
                 console.log("The door is locked. You can't pass!");
                 setShowInformationCard(false);
             } else {
-                console.log("The door is unlocked. You can pass!");
+
                 if (!isLookingAtDoor) {
                     setShowInformationCard(true);
                     setIsLookingAtDoor(true);
@@ -58,7 +58,9 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
                     title="Z door"
                     description="You have successfully unlocked the door. You can proceed."
                     buttonLabel="Enter"
-                    onButtonClick={() => setShowInformationCard(false)} // Close the card
+                    onButtonClick={() => {
+                        setShowInformationCard(false)
+                    }} // Close the card
                 />,
                 document.getElementById("portal-root") as HTMLElement
             );
