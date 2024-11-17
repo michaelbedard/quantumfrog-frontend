@@ -1,12 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import ReactDOM from "react-dom";
+import InformationCard from "./InformationCard";
 
 interface LaBarreProps {
     value: number;
+    isStoryEnded: boolean;
 }
 
 const LaBarre: React.FC<{props: LaBarreProps}> = ({ props }) => {
     // Ensure value is between -1 and 1
     const clampedValue = Math.min(Math.max(props.value, -1), 1);
+    const [showInformationCard, setShowInformationCard] = useState(false);
 
     // Calculate the percentage of each side (left and right)
     const rightFill = clampedValue > 0 ? clampedValue : 0;
@@ -26,8 +30,10 @@ const LaBarre: React.FC<{props: LaBarreProps}> = ({ props }) => {
         height: "3vh",
         backgroundColor: "white",
         border: "1px solid #ccc",
-        display: "flex",
+        display: props.isStoryEnded ? "flex" : "none",
+        cursor: props.isStoryEnded ? "pointer" : "default",
         position: "relative",
+        transition: "opacity 0.3s ease",
     };
 
     const leftHalfStyle = {
@@ -43,25 +49,44 @@ const LaBarre: React.FC<{props: LaBarreProps}> = ({ props }) => {
         transition: "width 0.3s ease",
         width: `${rightFill * 100}%`, // Percentage of the right side filled
     };
-    if(clampedValue <= 0) {
-        return (
-            <div style={containerStyle}>
-                <div style={barStyle}>
-                    <div style={leftHalfStyle}></div>
-                    <div style={rightHalfStyle}></div>
-                </div>
-            </div>
-        )
-    } else {
-        return (
-            <div style={containerStyle}>
-                <div style={barStyle}>
-                    <div style={leftHalfStyle}></div>
-                    <div style={rightHalfStyle}></div>
-                </div>
-            </div>
-        )
+
+    const onclick = () => {
+        if (!props.isStoryEnded) {
+            return;
+        }
+
+        setShowInformationCard(true)
     }
+
+
+    // Portal rendering logic
+    const renderInformationCard = () => {
+        if (showInformationCard) {
+            return ReactDOM.createPortal(
+                <InformationCard
+                    title="BAR"
+                    description="YYY"
+                    buttonLabel="Got it!"
+                    onButtonClick={() => setShowInformationCard(false)} // Close the card
+                />,
+                document.getElementById("portal-root") as HTMLElement
+            );
+        }
+        return null;
+    };
+
+
+    return (
+        <>
+            <div style={containerStyle}>
+                <div style={barStyle} onClick={onclick}>
+                    <div style={leftHalfStyle}></div>
+                    <div style={rightHalfStyle}></div>
+                </div>
+            </div>
+            {renderInformationCard()}
+        </>
+    )
 };
 
 export default LaBarre;

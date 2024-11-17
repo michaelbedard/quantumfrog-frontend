@@ -47,7 +47,7 @@ function StartScreenOverlay({
                     backgroundColor: "rgba(0, 0, 0, 0.8)",
                     clipPath: isStoryEnded
                         ? "circle(100% at 50% 50%)"
-                        : "circle(15% at 50% 30%)",
+                        : "circle(15% at 50% 50%)",
                     transition: "clip-path 1s ease-in-out",
                     zIndex: 2,
                 }}
@@ -58,7 +58,7 @@ function StartScreenOverlay({
             <div draggable="false"
                 style={{
                     position: "absolute",
-                    top: "70%",
+                    top: "13%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     color: "white",
