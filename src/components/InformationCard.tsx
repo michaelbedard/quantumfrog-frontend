@@ -14,7 +14,7 @@ const InformationCard: React.FC<InformationCardProps> = ({title, description, bu
                 border: "1px solid #ccc",
                 padding: "16px",
                 borderRadius: "8px",
-                width: "90%",
+                width: "300px",
                 height: "300px",
                 maxWidth: "400px",
                 background: "#fff",

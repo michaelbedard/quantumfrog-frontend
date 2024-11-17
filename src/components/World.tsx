@@ -11,7 +11,8 @@ interface LevelProps {
     backgroundRef: React.RefObject<HTMLDivElement>;
     backgroundSize: { width: number; height: number };
     coordinate: Coordinates ;
-    rotate: number
+    rotate: number;
+    isStoryEnded: boolean
 }
 
 const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : {props : LevelProps}) => {
@@ -41,7 +42,7 @@ const World: ({props}: { props: LevelProps }) => React.JSX.Element = ({props} : 
                 y: 0.60,
                 isLocked: false,
                 playerCoordinates: props.coordinate,
-                backgroundSize: props.backgroundSize
+                backgroundSize: props.backgroundSize,
             }}/>
 
             {/*<Door props={{*/}

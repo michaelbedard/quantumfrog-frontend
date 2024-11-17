@@ -6,13 +6,14 @@ import {Coordinates} from "../pages/App";
 
 
 interface UserControlsProps {
+    isStoryEnded: boolean;
     setPlayerCoordinates: React.Dispatch<React.SetStateAction<Coordinates>>;
     setBackgroundPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
     Style?: React.CSSProperties;
     children: React.ReactNode;
 }
 
-const UserControls: React.FC<UserControlsProps> = ({ setPlayerCoordinates, setBackgroundPosition, Style, children }) => {
+const UserControls: React.FC<UserControlsProps> = ({ isStoryEnded, setPlayerCoordinates, setBackgroundPosition, Style, children }) => {
 
     const [mousePosition, setMousePosition] = useMousePosition();
     const [mouseDown, setMouseDown] = useMouseDown();
@@ -48,11 +49,18 @@ const UserControls: React.FC<UserControlsProps> = ({ setPlayerCoordinates, setBa
     }
 
     const handleMouseDown = (e: any) => {
+        if (!isStoryEnded) {
+            return;
+        }
+
         setMouseDown(true);
         isMouseDown.current = true;
     }
 
     useEffect(() => {
+        if (!isStoryEnded) {
+            return;
+        }
         // Only move the background when mouseDown is true
         if (mouseDown) {
             const moveBackground = (timestamp: number) => {
