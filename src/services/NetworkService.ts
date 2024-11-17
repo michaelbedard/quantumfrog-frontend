@@ -5,7 +5,7 @@ const url = 'https://quantumfrog-backend.onrender.com';
 
 export async function registerUser() {
     try {
-        const response = await axios.get('/register_user');
+        const response = await axios.get('http://127.0.0.1:5000/register_user');
         return response.data;
     } catch (error) {
         console.error('Error fetching user data:', error);
@@ -16,7 +16,7 @@ export async function registerUser() {
 
 export async function getUserData() {
     try {
-        const response = await axios.get('/get_user');
+        const response = await axios.get('http://127.0.0.1:5000/get_user');
         return response.data;
     } catch (error) {
         console.error('Error fetching user data:', error);
