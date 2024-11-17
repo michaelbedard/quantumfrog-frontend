@@ -10,6 +10,7 @@ interface DoorProps {
     x: number;
     y: number;
     backgroundSize: { width: number; height: number };
+    id: number;
 }
 
 const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {props : DoorProps}) => {
@@ -31,7 +32,7 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
             Math.pow(doorCoordinates.x - props.playerCoordinates.x, 2) +
             Math.pow(doorCoordinates.y - props.playerCoordinates.y, 2)
         );
-        if (distance <= proximityThreshold) {
+        if (distance <= proximityThreshold && (doorCoordinates.x != 0 && doorCoordinates.y != 0)) {
             if (props.isLocked) {
                 console.log("The door is locked. You can't pass!");
                 setShowInformationCard(false);
@@ -49,14 +50,17 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
     }, [props.playerCoordinates, props.x, props.y, props.isLocked, props.backgroundSize]);
 
     // Portal rendering logic
-    const renderInformationCard = () => {
+    const renderInformationCard = (id: number) => {
         if (showInformationCard) {
             console.log("The door is unlocked. You can pass!");
 
+            const doorInfo : any = getDoorInfo(props.id)
+        
+
             return ReactDOM.createPortal(
                 <InformationCard
-                    title="Z door"
-                    description="You have successfully unlocked the door. You can proceed."
+                    title={doorInfo.title}
+                    description={doorInfo.description}
                     buttonLabel="Enter"
                     onButtonClick={() => {
                         setShowInformationCard(false)
@@ -68,6 +72,34 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
         return null;
     };
 
+    function getDoorInfo(doorId : number) {
+        const doorInfo: { [key: number]: any} = {
+            1: { 
+                title: "Hadamard Gate", 
+                description: "Sends |0> to |+> or |1> to |->",
+                type: "h"
+            },
+            2: { 
+                title: "Bit-flip Gate", 
+                description: "Sends |0> to |1> or |1> to |0>",
+                                type: "x"
+            },
+            3: { 
+                title: "Phase-Flip Gate", 
+                description: "Sends |0> to |0> or |1> to -|1>",
+                                type: "z"
+            },
+            4: { 
+                title: "Rotation Gate", 
+                description: "Rotates pi/8",
+                                type: "r"
+            }
+        };
+        
+        
+        return doorInfo[doorId] || doorInfo[0];
+    }
+
     return (
         <>
             <img draggable="false" src={props.backgroundImage} alt={"door"} style={{
@@ -78,7 +110,7 @@ const Door: ({props}: { props: DoorProps }) => React.JSX.Element = ({props} : {p
                 transform: "translate(-50%, -50%)",
                 objectFit: "contain",
             }}/>
-            {renderInformationCard()}
+            {renderInformationCard(props.id)}
         </>
     )
 }

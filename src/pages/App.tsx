@@ -32,7 +32,7 @@ function App() {
     const [rotation] = useRotation();
     const [isStoryEnded, setIsStoryEnded] = useStoryEnded();
     const [showInformationCard, setShowInformationCard] = useState(false);
-    const [worldId, setWorldId] = useState(0);
+    const [worldId, setWorldId] = useState(4);
 
 
     const valueLaBarre = -0.2;
@@ -99,6 +99,8 @@ function App() {
         return null;
     };
 
+    
+
     return (
         <>
             <UserControls isStoryEnded={isStoryEnded} setPlayerCoordinates={setPlayerCoordinates} setBackgroundPosition={setBackgroundPosition} Style={{height:'100%'}}>
@@ -138,17 +140,8 @@ function App() {
                                      overflow: "hidden",
                                  }}
                             >
-                                {if (worldId === 0){
-                                    <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded, door1Posion" 0.1"}} />
-                                }}
 
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
-                                <World props={{coordinate: playerCoordinates, backgroundSize: backgroundSize, backgroundRef: backgroundRef, rotate: rotation, isStoryEnded: isStoryEnded}} />
+                                {renderWorld(worldId)}
                             </div>
                         </StartScreenOverlay>
 
@@ -176,6 +169,81 @@ function App() {
             </div>
         </>
     )
+
+    function renderWorld(worldId : number) {
+        const worldConfig = getWorldConfig(worldId); // Get the configuration for the current world
+        return (
+            <World props={{
+                coordinate: playerCoordinates,
+                backgroundSize: backgroundSize,
+                backgroundRef: backgroundRef,
+                rotate: rotation,
+                isStoryEnded: isStoryEnded,
+                door1Position: worldConfig.door1Position,
+                door2Position: worldConfig.door2Position,
+                door3Position: worldConfig.door3Position,
+                door4Position: worldConfig.door4Position,
+                
+            }} />
+        );
+    }
+    
+    // Example: Function to return world configuration based on worldId
+    function getWorldConfig(worldId : number) {
+        const worldData: { [key: number]: any} = {
+            0: { 
+                door1Position: { x: 0.23, y: 0.77 }, 
+                door2Position: { x: 0.61, y: 0.21 }, 
+                door3Position: { x: 0.81, y: 0.74 },
+                door4Position: { x: 0.11, y: 0.35 } 
+            },
+            1: { 
+                door1Position: { x: 0.45, y: 0.1 }, 
+                door2Position: { x: 0.72, y: 0.31 }, 
+                door3Position: { x: 0.92, y: 0.67 },
+                door4Position: { x: 0.16, y: 0.82 }  
+            },
+            2: { 
+                door1Position: { x: 0.33, y: 0.46 }, 
+                door2Position: { x: 0.77, y: 0.36 }, 
+                door3Position: { x: 0.95, y: 0.13 },
+                door4Position: { x: 0.21, y: 0.92 }
+            },
+            3: { 
+                door1Position: { x: 0.86, y: 0.14 }, 
+                door2Position: { x: 0.63, y: 0.72 }, 
+                door3Position: { x: 0.87, y: 0.29 },
+                door4Position: { x: 0.12, y: 0.54 }
+            },
+            4: { 
+                door1Position: { x: 0.64, y: 0.84 }, 
+                door2Position: { x: 0.53, y: 0.91 }, 
+                door3Position: { x: 0.73, y: 0.67 },
+                door4Position: { x: 0.18, y: 0.29 }  
+            },
+            5: { 
+                door1Position: { x: 0.12, y: 0.51 }, 
+                door2Position: { x: 0.29, y: 0.77 }, 
+                door3Position: { x: 0.65, y: 0.53 },
+                door4Position: { x: 0.78, y: 0.18 }  
+            },
+            6: { 
+                door1Position: { x: 0.63, y: 0.23 }, 
+                door2Position: { x: 0.71, y: 0.48 }, 
+                door3Position: { x: 0.85, y: 0.92 },
+                door4Position: { x: 0.25, y: 0.67 } 
+            },
+            7: { 
+                door1Position: { x: 0.93, y: 0.12 }, 
+                door2Position: { x: 0.38, y: 0.61 }, 
+                door3Position: { x: 0.79, y: 0.24 },
+                door4Position: { x: 0.52, y: 0.79 } 
+            },
+        };
+        
+        
+        return worldData[worldId] || worldData[0];
+    }
 }
 
 export default App;
