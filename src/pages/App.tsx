@@ -39,9 +39,12 @@ function App() {
             const userData = await registerUser();
             const parsedData = JSON.parse(userData) as UserData;
 
-            setClientId(userData.id)
+            console.log(parsedData)
+
+            setClientId(parsedData.id)
         };
 
+        console.log("Register!!!")
         register();
     }, []);
 
