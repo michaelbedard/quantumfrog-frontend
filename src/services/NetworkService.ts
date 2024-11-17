@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const url = 'https://quantumfrog-backend.onrender.com';
-const url = 'http://127.0.0.1:5000';
+const url = 'https://quantumfrog-backend.onrender.com';
+// const url = 'http://127.0.0.1:5000';
 
 export async function registerUser() {
     try {
